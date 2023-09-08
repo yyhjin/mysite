@@ -63,9 +63,9 @@ public class UserDao {
 		
 		return result;
 	}
-
-	public String findPasswordByNo(int no) {
-		String result = null;
+	
+	public UserVo findByEmailAndPassword(String email, String password) {
+		UserVo userVo = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -74,23 +74,27 @@ public class UserDao {
 			conn = getConnection();
 			
 			String sql =
-					"select password "
-					+ "from guestbook "
-					+ "where no = ?";
+					"select no, name "
+					+ "from user "
+					+ "where email = ? "
+					+ "and password = password(?)";
 			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setInt(1, no);
+			pstmt.setString(1, email);
+			pstmt.setString(2, password);
 			
 			rs = pstmt.executeQuery();
 			
-			while(rs.next()) {
-				String password = rs.getString(1);
+			if(rs.next()) {
+				Long no = rs.getLong(1);
+				String name = rs.getString(2);
 				
-				result = password;
+				userVo = new UserVo();
+				userVo.setNo(no);
+				userVo.setName(name);
 			}
 			
 		} catch (SQLException e) {
-			System.out.println("Guestbook Select error: " + e);
+			System.out.println("User Insert error: " + e);
 		} finally {
 			try {
 				if (rs != null) {
@@ -107,7 +111,7 @@ public class UserDao {
 			}
 		}
 		
-		return result;
+		return userVo;
 	}
 	
 	public boolean insert(UserVo vo) {
