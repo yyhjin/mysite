@@ -3,6 +3,7 @@
 	pageEncoding="UTF-8"%>
 <%
 	UserVo authUser = (UserVo)session.getAttribute("authUser");
+	UserVo userInfo = (UserVo)request.getAttribute("userInfo");
 %>
 <!DOCTYPE html>
 <html>
@@ -18,23 +19,25 @@
 		<div id="content">
 			<div id="user">
 
-				<form id="join-form" name="joinForm" method="post" action="<%=request.getContextPath()%>/user?a=join">
-					<input type="hidden" name="a" value="update"> 
+				<form id="join-form" name="joinForm" method="post" action="<%=request.getContextPath()%>/user">
+					<input type="hidden" name="a" value="update">
+					<input type="hidden" name="no" value="<%=authUser.getNo() %>">
 					
 					<label class="block-label" for="name">이름</label> 
 					<input id="name" name="name" type="text" value="<%=authUser.getName() %>">
 					
 					<label class="block-label"for="email">이메일</label>
-					<h4><%=authUser.getEmail() %></h4>
+					<input id="email" name="email" type="text" value="<%=userInfo.getEmail() %>" readonly="readonly" style="color: grey">
 					
 					<label class="block-label">패스워드</label> 
 					<input name="password" type="password" value="">
 
 					<fieldset>
 						<legend>성별</legend>
-						<label>여</label> <input type="radio" name="gender" value="female"
-							checked="checked"> <label>남</label> <input type="radio"
-							name="gender" value="male">
+						<label>여</label>
+						<input type="radio" name="gender" value="female" <% if ("female".equals(userInfo.getGender())) %> checked="checked">
+						<label>남</label> 
+						<input type="radio" name="gender" value="male" <% if ("male".equals(userInfo.getGender())) %> checked="checked">
 					</fieldset>
 
 					<input type="submit" value="수정하기">

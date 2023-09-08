@@ -115,6 +115,54 @@ public class UserDao {
 		return userVo;
 	}
 	
+	public UserVo findByNo(long no) {
+		UserVo userVo = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = getConnection();
+			
+			String sql =
+					"select email, gender "
+					+ "from user "
+					+ "where no = ? ";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setLong(1, no);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				String email = rs.getString(1);
+				String gender = rs.getString(2);
+				
+				userVo = new UserVo();
+				userVo.setEmail(email);
+				userVo.setGender(gender);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("User Select error: " + e);
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return userVo;
+	}
+	
 	public boolean insert(UserVo vo) {
 		boolean result = false;
 		Connection conn = null;
@@ -138,6 +186,46 @@ public class UserDao {
 			
 		} catch (SQLException e) {
 			System.out.println("User Insert error: " + e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
+	}
+	
+	public boolean update(UserVo vo) {
+		boolean result = false;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = getConnection();
+			
+			String sql =
+					"update user "
+					+ "set name=?, password=password(?), gender=? "
+					+ "where no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getName());
+			pstmt.setString(2, vo.getPassword());
+			pstmt.setString(3, vo.getGender());
+			pstmt.setLong(4, vo.getNo());
+			
+			int cnt = pstmt.executeUpdate();
+			
+			result = cnt == 1;
+			
+		} catch (SQLException e) {
+			System.out.println("User Update error: " + e);
 		} finally {
 			try {
 				if (pstmt != null) {

@@ -22,7 +22,6 @@ public class LoginAction implements Action {
 		
 		// 로그인 실패
 		if(userVo == null) {
-			request.setAttribute("email", email);
 			WebUtil.forward("user/loginform", request, response);
 			return;
 		}
