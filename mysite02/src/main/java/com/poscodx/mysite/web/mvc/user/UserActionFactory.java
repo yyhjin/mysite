@@ -11,10 +11,8 @@ public class UserActionFactory implements ActionFactory {
 		
 		if("joinform".equals(actionName)) {
 			action = new JoinFormAction();
-			
 		} else if("join".equals(actionName)) {
 			action = new JoinAction();
-		
 		} else if("joinsuccess".equals(actionName)) {
 			action = new JoinSuccessAction();
 		} else if("loginform".equals(actionName)) {
@@ -23,6 +21,8 @@ public class UserActionFactory implements ActionFactory {
 			action = new LoginAction();
 		} else if("logout".equals(actionName)) {
 			action = new LogoutAction();
+		} else if("updateform".equals(actionName)) {
+			action = new UpdateFormAction();
 		} else {
 			action = new MainAction();
 		}

@@ -91,6 +91,7 @@ public class UserDao {
 				userVo = new UserVo();
 				userVo.setNo(no);
 				userVo.setName(name);
+				userVo.setEmail(email);
 			}
 			
 		} catch (SQLException e) {
