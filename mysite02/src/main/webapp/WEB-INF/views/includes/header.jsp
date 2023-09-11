@@ -4,9 +4,6 @@
 <%@page import="com.poscodx.mysite.vo.UserVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%
-	UserVo authUser = (UserVo)session.getAttribute("authUser");
-%>
 <div id="header">
 	<h1>MySite</h1>
 	<ul>

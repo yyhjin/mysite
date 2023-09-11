@@ -19,10 +19,10 @@
 
 				<form id="join-form" name="joinForm" method="post" action="${pageContext.request.contextPath}/user">
 					<input type="hidden" name="a" value="update">
-					<input type="hidden" name="no" value="${sessionScope.authUser.no }">
+					<input type="hidden" name="no" value="${authUser.no }">
 					
 					<label class="block-label" for="name">이름</label> 
-					<input id="name" name="name" type="text" value="${sessionScope.authUser.name }">
+					<input id="name" name="name" type="text" value="${authUser.name }">
 					
 					<label class="block-label"for="email">이메일</label>
 					<input id="email" name="email" type="hidden" value="${userInfo.email }">
