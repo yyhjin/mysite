@@ -22,7 +22,6 @@
 			<div id="board">
 				<form class="board-form" method="post" action="${pageContext.request.contextPath}/board">
 					<input type = "hidden" name = "a" value="write">
-					${groupNo }
 					<input type = "hidden" name = "group" value="${groupNo }">
 					<table class="tbl-ex">
 						<tr>

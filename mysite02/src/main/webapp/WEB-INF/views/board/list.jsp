@@ -33,12 +33,12 @@
 							<td>${count - status.index}</td>
 							<td style="padding-left: ${(1-1) * 30}px">
 								<img src="${pageContext.request.contextPath}/assets/images/reply.png">
-								<a href="">${vo.title }</a>
+								<a href="${pageContext.request.contextPath}/board?a=view&n=${vo.no}">${vo.title }</a>
 							</td>
 							<td>${vo.userName }</td>
 							<td>${vo.hit }</td>
 							<td>${vo.regDate }</td>
-							<td><a href="" class="del">삭제</a></td>
+							<td><a href="${pageContext.request.contextPath}/board?a=deleteform&n=${vo.no}" class="del">삭제</a></td>
 						</c:forEach>
 					</tr>
 				</table>
