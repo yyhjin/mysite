@@ -11,17 +11,15 @@ import com.poscodx.mysite.vo.BoardVo;
 import com.poscodx.web.mvc.Action;
 import com.poscodx.web.utils.WebUtil;
 
-public class ViewAction implements Action {
+public class ModifyFormAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		long no = Long.parseLong(request.getParameter("n"));
 
 		BoardVo boardVo = new BoardDao().findByNo(no);
-		new BoardDao().updateHit(no);
-
 		request.setAttribute("vo", boardVo);
-		WebUtil.forward("board/view", request, response);
+		WebUtil.forward("board/modify", request, response);
 	}
 
 }

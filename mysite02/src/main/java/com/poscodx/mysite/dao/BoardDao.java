@@ -90,7 +90,7 @@ public class BoardDao {
 			conn = getConnection();
 			
 			String sql =
-					"select title, contents "
+					"select title, contents, user_no "
 					+ "from board "
 					+ "where no=?";
 			pstmt = conn.prepareStatement(sql);
@@ -100,10 +100,13 @@ public class BoardDao {
 			while(rs.next()) {
 				String title = rs.getString(1);
 				String contents = rs.getString(2);
+				long userNo = rs.getLong(3);
 				
 				result = new BoardVo();
+				result.setNo(no);
 				result.setTitle(title);;
 				result.setContents(contents);
+				result.setUserNo(userNo);
 			}
 			
 		} catch (SQLException e) {
@@ -216,7 +219,8 @@ public class BoardDao {
 		
 	}
 
-	public void deleteByNo(String no) {
+	public boolean updateHit(long no) {
+		boolean result = false;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -225,13 +229,14 @@ public class BoardDao {
 			conn = getConnection();
 			
 			String sql =
-					"delete from guestbook "
+					"update board "
+					+ "set hit = hit+1 "
 					+ "where no = ?";
 			pstmt = conn.prepareStatement(sql);
-				
-			pstmt.setString(1, no);
+			pstmt.setLong(1, no);
 			
-			rs = pstmt.executeQuery();
+			int cnt = pstmt.executeUpdate();
+			result = cnt == 1;
 			
 		} catch (SQLException e) {
 			System.out.println("Board Delete error: " + e);
@@ -251,6 +256,88 @@ public class BoardDao {
 			}
 		}
 		
+		return result;
+	}
+	
+	public boolean updateBoard(BoardVo vo) {
+		boolean result = false;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = getConnection();
+			
+			String sql =
+					"update board "
+					+ "set title=?, contents=? "
+					+ "where no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getTitle());
+			pstmt.setString(2, vo.getContents());
+			pstmt.setLong(3, vo.getNo());
+			
+			int cnt = pstmt.executeUpdate();
+			result = cnt == 1;
+			
+		} catch (SQLException e) {
+			System.out.println("Board Update error: " + e);
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
+	}
+	
+	public boolean deleteByNo(long no) {
+		boolean result = false;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = getConnection();
+			
+			String sql =
+					"delete from board "
+					+ "where no = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setLong(1, no);
+			
+			int cnt = pstmt.executeUpdate();
+			result = cnt == 1;
+			
+		} catch (SQLException e) {
+			System.out.println("Board Delete error: " + e);
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
 	}
 	
 	private Connection getConnection() throws SQLException {
@@ -266,7 +353,6 @@ public class BoardDao {
 
 		return conn;
 	}
-
 
 	
 }

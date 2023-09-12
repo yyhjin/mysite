@@ -27,9 +27,9 @@
 						<th>작성일</th>
 						<th>&nbsp;</th>
 					</tr>				
-					<tr>
-						<c:set var="count" value="${fn:length(list) }"/>
-						<c:forEach items="${list }" var="vo" varStatus="status">
+					<c:set var="count" value="${fn:length(list) }"/>
+					<c:forEach items="${list }" var="vo" varStatus="status">
+						<tr>
 							<td>${count - status.index}</td>
 							<td style="padding-left: ${(1-1) * 30}px">
 								<img src="${pageContext.request.contextPath}/assets/images/reply.png">
@@ -38,9 +38,11 @@
 							<td>${vo.userName }</td>
 							<td>${vo.hit }</td>
 							<td>${vo.regDate }</td>
-							<td><a href="${pageContext.request.contextPath}/board?a=deleteform&n=${vo.no}" class="del">삭제</a></td>
-						</c:forEach>
-					</tr>
+							<c:if test="${authUser.no == vo.userNo }">
+								<td><a href="${pageContext.request.contextPath}/board?a=delete&n=${vo.no}" class="del">삭제</a></td>
+							</c:if>
+						</tr>
+					</c:forEach>
 				</table>
 				
 				<!-- pager 추가 -->

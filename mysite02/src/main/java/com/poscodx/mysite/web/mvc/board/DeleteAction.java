@@ -7,21 +7,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.poscodx.mysite.dao.BoardDao;
-import com.poscodx.mysite.vo.BoardVo;
 import com.poscodx.web.mvc.Action;
-import com.poscodx.web.utils.WebUtil;
 
-public class ViewAction implements Action {
+public class DeleteAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		long no = Long.parseLong(request.getParameter("n"));
+		
+		new BoardDao().deleteByNo(no);
 
-		BoardVo boardVo = new BoardDao().findByNo(no);
-		new BoardDao().updateHit(no);
-
-		request.setAttribute("vo", boardVo);
-		WebUtil.forward("board/view", request, response);
+		response.sendRedirect("board?a=list");
 	}
 
 }
