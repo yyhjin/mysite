@@ -90,7 +90,7 @@ public class BoardDao {
 			conn = getConnection();
 			
 			String sql =
-					"select title, contents, user_no, g_no "
+					"select title, contents, user_no, g_no, o_no, depth "
 					+ "from board "
 					+ "where no=?";
 			pstmt = conn.prepareStatement(sql);
@@ -102,12 +102,16 @@ public class BoardDao {
 				String contents = rs.getString(2);
 				long userNo = rs.getLong(3);
 				int groupNo = rs.getInt(4);
+				int orderNo = rs.getInt(5);
+				int depth = rs.getInt(6);
 				
 				result = new BoardVo();
 				result.setNo(no);
 				result.setTitle(title);;
 				result.setContents(contents);
 				result.setGroupNo(groupNo);
+				result.setOrderNo(orderNo);
+				result.setDepth(depth);
 				result.setUserNo(userNo);
 			}
 			
@@ -143,7 +147,7 @@ public class BoardDao {
 			
 			String sql =
 					"select max(g_no) "
-					+ "from board";
+					+ "from board ";
 			pstmt = conn.prepareStatement(sql);			
 			rs = pstmt.executeQuery();
 			
@@ -303,6 +307,49 @@ public class BoardDao {
 		return result;
 	}
 	
+	public boolean updateOrderNo(int groupNo, int orderNo) {
+		boolean result = false;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = getConnection();
+			
+			String sql =
+					"update board "
+					+ "set o_no = o_no+1 "
+					+ "where g_no=? "
+					+ "and o_no > ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, groupNo);
+			pstmt.setInt(2, orderNo);
+			
+			int cnt = pstmt.executeUpdate();
+			result = cnt >= 1;
+			
+		} catch (SQLException e) {
+			System.out.println("Board OrderNo Update error: " + e);
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
+	}
+
+	
 	public boolean deleteByNo(long no) {
 		boolean result = false;
 		Connection conn = null;
@@ -355,6 +402,5 @@ public class BoardDao {
 
 		return conn;
 	}
-
 	
 }

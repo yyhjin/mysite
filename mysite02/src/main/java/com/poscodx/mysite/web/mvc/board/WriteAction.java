@@ -19,22 +19,27 @@ public class WriteAction implements Action {
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
 		
-		int groupNo = Integer.parseInt(request.getParameter("group"));
+		int boardNo = Integer.parseInt(request.getParameter("board"));
+		
+		int groupNo = -1;
 		int orderNo = 1;
 		int depth = 0;
 		
 		// 게시글 작성
-		if(groupNo == 0) {
+		if(boardNo == 0) {
 			groupNo = new BoardDao().getMaxGroup() + 1;
 			orderNo = 1;
 			depth = 1;
 		}
 		// 답글 작성
-//		else {
-//			헤당 글의 no도 넘겨받아야 할 것 같음, no로 depth, order_no 찾아서 처리//
-//		
-//			orderNo = new BoardDao().getMax
-//		}
+		else {		
+			BoardVo parentVo = new BoardDao().findByNo(boardNo);
+			groupNo = parentVo.getGroupNo();
+			orderNo = parentVo.getOrderNo()+1;
+			depth  = parentVo.getDepth()+1;
+			
+			new BoardDao().updateOrderNo(groupNo, parentVo.getOrderNo());
+		}
 		
 		BoardVo vo = new BoardVo(); 
 		vo.setUserNo(userNo);

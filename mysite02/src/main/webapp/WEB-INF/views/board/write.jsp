@@ -10,20 +10,19 @@
 <link href="${pageContext.request.contextPath}/assets/css/board.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-	<c:set var="groupNo" value="${param.g }"/>
+	<c:set var="boardNo" value="${param.n }"/>
 	
-	<c:if test="${empty param.g }">
-		<c:set var="groupNo" value="0"/>
+	<c:if test="${empty param.n }">
+		<c:set var="boardNo" value="0"/>
 	</c:if>
 
 	<div id="container">
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board">
-			${groupNo }
 				<form class="board-form" method="post" action="${pageContext.request.contextPath}/board">
 					<input type = "hidden" name = "a" value="write">
-					<input type = "hidden" name = "group" value="${groupNo }">
+					<input type = "hidden" name = "board" value="${boardNo }">
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">글쓰기</th>
