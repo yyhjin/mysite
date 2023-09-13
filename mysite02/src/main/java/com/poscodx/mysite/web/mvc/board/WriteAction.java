@@ -31,10 +31,12 @@ public class WriteAction implements Action {
 		}
 		// 답글 작성
 //		else {
+//			헤당 글의 no도 넘겨받아야 할 것 같음, no로 depth, order_no 찾아서 처리//
+//		
 //			orderNo = new BoardDao().getMax
 //		}
 		
-		BoardVo vo = new BoardVo();
+		BoardVo vo = new BoardVo(); 
 		vo.setUserNo(userNo);
 		vo.setTitle(title);
 		vo.setContents(content);

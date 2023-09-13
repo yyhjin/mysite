@@ -90,7 +90,7 @@ public class BoardDao {
 			conn = getConnection();
 			
 			String sql =
-					"select title, contents, user_no "
+					"select title, contents, user_no, g_no "
 					+ "from board "
 					+ "where no=?";
 			pstmt = conn.prepareStatement(sql);
@@ -101,11 +101,13 @@ public class BoardDao {
 				String title = rs.getString(1);
 				String contents = rs.getString(2);
 				long userNo = rs.getLong(3);
+				int groupNo = rs.getInt(4);
 				
 				result = new BoardVo();
 				result.setNo(no);
 				result.setTitle(title);;
 				result.setContents(contents);
+				result.setGroupNo(groupNo);
 				result.setUserNo(userNo);
 			}
 			

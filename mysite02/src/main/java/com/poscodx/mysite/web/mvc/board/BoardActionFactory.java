@@ -20,6 +20,8 @@ public class BoardActionFactory implements ActionFactory {
 			action = new ModifyAction();
 		} else if("delete".equals(actionName)) {
 			action = new DeleteAction();
+		} else if("replyform".equals(actionName)) {
+			action = new WriteFormAction();
 		} else {
 			action = new BoardListAction();
 		}

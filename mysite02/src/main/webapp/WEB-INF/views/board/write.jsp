@@ -20,6 +20,7 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board">
+			${groupNo }
 				<form class="board-form" method="post" action="${pageContext.request.contextPath}/board">
 					<input type = "hidden" name = "a" value="write">
 					<input type = "hidden" name = "group" value="${groupNo }">
