@@ -17,9 +17,10 @@ public class WriteFormAction implements Action {
 		}
 		else {
 			long no = Long.parseLong(request.getParameter("n"));
+			int curPage = Integer.parseInt(request.getParameter("p"));
 			
 			request
-				.getRequestDispatcher("/WEB-INF/views/board/write.jsp?n=" + no)
+				.getRequestDispatcher("/WEB-INF/views/board/write.jsp?n=" + no + "&p=" + curPage)
 				.forward(request, response);
 		}
 		

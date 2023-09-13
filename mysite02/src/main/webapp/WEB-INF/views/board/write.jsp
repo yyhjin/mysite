@@ -11,9 +11,11 @@
 </head>
 <body>
 	<c:set var="boardNo" value="${param.n }"/>
+	<c:set var="curPage" value="${param.p }"/>
 	
 	<c:if test="${empty param.n }">
 		<c:set var="boardNo" value="0"/>
+		<c:set var="curPage" value="1"/>
 	</c:if>
 
 	<div id="container">
@@ -23,6 +25,7 @@
 				<form class="board-form" method="post" action="${pageContext.request.contextPath}/board">
 					<input type = "hidden" name = "a" value="write">
 					<input type = "hidden" name = "board" value="${boardNo }">
+					<input type = "hidden" name = "p" value="${param.p }">
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">글쓰기</th>
@@ -39,7 +42,7 @@
 						</tr>
 					</table>
 					<div class="bottom">
-						<a href="${pageContext.request.contextPath}/board?p=1">취소</a>
+						<a href="javascript:history.back()">취소</a>
 						<input type="submit" value="등록">
 					</div>
 				</form>				

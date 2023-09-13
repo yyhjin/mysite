@@ -14,10 +14,11 @@ public class DeleteAction implements Action {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		long no = Long.parseLong(request.getParameter("n"));
+		int curPage = Integer.parseInt(request.getParameter("p"));
 		
 		new BoardDao().deleteByNo(no);
 
-		response.sendRedirect("board?a=list&p=1");
+		response.sendRedirect("board?a=list&p="+curPage);
 	}
 
 }

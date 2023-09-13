@@ -29,7 +29,7 @@ public class BoardListAction implements Action {
 		if (endPage > totalPage)
 			endPage = totalPage;
 		
-		System.out.println("total: " + totalPage + ", start: "+startPage+", end: "+endPage + ", current: "+curPage);
+//		System.out.println("total: " + totalPage + ", start: "+startPage+", end: "+endPage + ", current: "+curPage);
 		
 		/* 페이지에 맞는 리스트 */
 		List<BoardVo> list = new BoardDao().findAll((curPage-1)*5);

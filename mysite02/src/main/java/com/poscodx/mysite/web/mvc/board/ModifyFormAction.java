@@ -16,9 +16,11 @@ public class ModifyFormAction implements Action {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		long no = Long.parseLong(request.getParameter("n"));
+		int curPage = Integer.parseInt(request.getParameter("p"));
 
 		BoardVo boardVo = new BoardDao().findByNo(no);
 		request.setAttribute("vo", boardVo);
+		request.setAttribute("curPage", curPage);
 		WebUtil.forward("board/modify", request, response);
 	}
 

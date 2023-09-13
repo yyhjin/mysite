@@ -16,11 +16,13 @@ public class ViewAction implements Action {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		long no = Long.parseLong(request.getParameter("n"));
+		int curPage = Integer.parseInt(request.getParameter("p"));
 
 		BoardVo boardVo = new BoardDao().findByNo(no);
 		new BoardDao().updateHit(no);
 
 		request.setAttribute("vo", boardVo);
+		request.setAttribute("curPage", curPage);
 		WebUtil.forward("board/view", request, response);
 	}
 

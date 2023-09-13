@@ -24,6 +24,8 @@ public class WriteAction implements Action {
 		int groupNo = -1;
 		int orderNo = 1;
 		int depth = 0;
+
+		int curPage = 1;
 		
 		// 게시글 작성
 		if(boardNo == 0) {
@@ -37,6 +39,7 @@ public class WriteAction implements Action {
 			groupNo = parentVo.getGroupNo();
 			orderNo = parentVo.getOrderNo()+1;
 			depth  = parentVo.getDepth()+1;
+			curPage = Integer.parseInt(request.getParameter("p"));
 			
 			new BoardDao().updateOrderNo(groupNo, parentVo.getOrderNo());
 		}
@@ -51,7 +54,7 @@ public class WriteAction implements Action {
 		
 		new BoardDao().insert(vo);
 
-		response.sendRedirect("/mysite02/board?p=1");
+		response.sendRedirect("/mysite02/board?p="+curPage);
 	}
 
 }

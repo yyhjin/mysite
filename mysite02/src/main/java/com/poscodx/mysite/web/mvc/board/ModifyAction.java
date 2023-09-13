@@ -18,6 +18,7 @@ public class ModifyAction implements Action {
 		long no = Long.parseLong(request.getParameter("n"));
 		String title = request.getParameter("title");
 		String contents = request.getParameter("content");
+		int curPage = Integer.parseInt(request.getParameter("p"));
 		
 		vo.setNo(no);
 		vo.setTitle(title);
@@ -25,7 +26,7 @@ public class ModifyAction implements Action {
 		
 		new BoardDao().updateBoard(vo);
 		
-		response.sendRedirect("board?a=view&n="+no);
+		response.sendRedirect("board?a=view&n="+no+"&p="+curPage);
 	}
 
 }

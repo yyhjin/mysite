@@ -17,6 +17,7 @@
 				<form class="board-form" method="post" action="${pageContext.request.contextPath}/board">
 					<input type = "hidden" name = "a" value="modify">
 					<input type = "hidden" name = "n" value="${vo.no }">
+					<input type = "hidden" name = "p" value="${curPage }">
 					
 					<table class="tbl-ex">
 						<tr>
@@ -35,7 +36,7 @@
 						</tr>
 					</table>
 					<div class="bottom">
-						<a href="${pageContext.request.contextPath}/board?a=view&n=${vo.no}">취소</a>
+						<a href="javascript:history.back()">취소</a>
 						<input type="submit" value="수정">
 					</div>
 				</form>				
