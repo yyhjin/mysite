@@ -17,7 +17,7 @@ public class DeleteAction implements Action {
 		
 		new BoardDao().deleteByNo(no);
 
-		response.sendRedirect("board?a=list");
+		response.sendRedirect("board?a=list&p=1");
 	}
 
 }

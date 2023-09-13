@@ -14,7 +14,7 @@ import com.poscodx.mysite.vo.BoardVo;
 
 public class BoardDao {
 
-	public List<BoardVo> findAll() {
+	public List<BoardVo> findAll(int start) {
 		List<BoardVo> result = new ArrayList<BoardVo>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -26,8 +26,10 @@ public class BoardDao {
 			String sql =
 					"select no, title, contents, hit, reg_date, g_no, o_no, depth, user_no "
 					+ "from board "
-					+ "order by g_no desc, o_no asc";
+					+ "order by g_no desc, o_no asc "
+					+ "limit ?, 5";
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, start);
 			
 			rs = pstmt.executeQuery();
 			
@@ -57,6 +59,46 @@ public class BoardDao {
 				vo.setUserName(userName);
 				
 				result.add(vo);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("Board Select error: " + e);
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
+	}
+	
+	public int findAllCount() {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = getConnection();
+			
+			String sql =
+					"select count(*) "
+					+ "from board";
+			pstmt = conn.prepareStatement(sql);			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				result = rs.getInt(1);
 			}
 			
 		} catch (SQLException e) {

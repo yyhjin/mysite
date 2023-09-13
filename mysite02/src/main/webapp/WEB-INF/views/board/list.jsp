@@ -50,16 +50,21 @@
 				<!-- pager 추가 -->
 				<div class="pager">
 					<ul>
-						<li><a href="">◀</a></li>
-						<li><a href="">1</a></li>
-						<li class="selected">2</li>
-						<li><a href="">3</a></li>
-						<li>4</li>
-						<li>5</li>
-						<li><a href="">▶</a></li>
+						<c:if test="${curPage > 1 }">
+							<li><a href="${pageContext.request.contextPath}/board?p=${curPage-1 }">◀</a></li>
+						</c:if>
+						
+						<c:forEach begin="${startPage }" end="${endPage }" varStatus="status">
+							<li <c:if test="${curPage == status.count }">class="selected"</c:if>>
+							<a href="${pageContext.request.contextPath}/board?p=${status.index }">${status.index}</a>
+							</li>
+						</c:forEach>
+						
+						<c:if test="${curPage < totalPage }">
+							<li><a href="${pageContext.request.contextPath}/board?p=${curPage+1 }">▶</a></li>
+						</c:if>
 					</ul>
 				</div>					
-				<!-- pager 추가 -->
 				
 				<c:if test="${not empty authUser }">
 					<div class="bottom">

@@ -32,7 +32,7 @@ public class WriteAction implements Action {
 			depth = 1;
 		}
 		// 답글 작성
-		else {		
+		else {
 			BoardVo parentVo = new BoardDao().findByNo(boardNo);
 			groupNo = parentVo.getGroupNo();
 			orderNo = parentVo.getOrderNo()+1;
@@ -51,7 +51,7 @@ public class WriteAction implements Action {
 		
 		new BoardDao().insert(vo);
 
-		response.sendRedirect("/mysite02/board");
+		response.sendRedirect("/mysite02/board?p=1");
 	}
 
 }
