@@ -14,8 +14,11 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="" method="post">
-					<input type="text" id="kwd" name="kwd" value="">
+				<form id="search_form" action="${pageContext.request.contextPath}/board" method="post">									
+					<input type = "hidden" name = "a" value="list">
+					<input type = "hidden" name = "p" value="1">
+					
+					<input type="text" id="k" name="k" value="${search }">
 					<input type="submit" value="찾기">
 				</form>
 				<table class="tbl-ex">
@@ -50,18 +53,18 @@
 				<!-- pager 추가 -->
 				<div class="pager">
 					<ul>
-						<c:if test="${curPage > 1 }">
-							<li><a href="${pageContext.request.contextPath}/board?p=${curPage-1 }">◀</a></li>
+						<c:if test="${pageVo.curPage > 1 }">
+							<li><a href="${pageContext.request.contextPath}/board?p=${pageVo.curPage-1 }&k=${search }">◀</a></li>
 						</c:if>
 						
-						<c:forEach begin="${startPage }" end="${endPage }" varStatus="status">
-							<li <c:if test="${curPage == status.index }">class="selected"</c:if>>
-							<a href="${pageContext.request.contextPath}/board?p=${status.index }">${status.index}</a>
+						<c:forEach begin="${pageVo.startPage }" end="${pageVo.endPage }" varStatus="status">
+							<li <c:if test="${pageVo.curPage == status.index }">class="selected"</c:if>>
+							<a href="${pageContext.request.contextPath}/board?p=${status.index }&k=${search }">${status.index}</a>
 							</li>
 						</c:forEach>
 						
-						<c:if test="${curPage < totalPage }">
-							<li><a href="${pageContext.request.contextPath}/board?p=${curPage+1 }">▶</a></li>
+						<c:if test="${pageVo.curPage < pageVo.totalPage }">
+							<li><a href="${pageContext.request.contextPath}/board?p=${pageVo.curPage+1 }&k=${search }">▶</a></li>
 						</c:if>
 					</ul>
 				</div>					

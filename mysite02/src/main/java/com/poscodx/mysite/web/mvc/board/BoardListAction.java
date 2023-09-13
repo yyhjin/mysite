@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.poscodx.mysite.dao.BoardDao;
 import com.poscodx.mysite.vo.BoardVo;
+import com.poscodx.mysite.vo.PaginationVo;
 import com.poscodx.web.mvc.Action;
 import com.poscodx.web.utils.WebUtil;
 
@@ -17,9 +18,15 @@ public class BoardListAction implements Action {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		
+		/* 검색 */
+		String search = "";
+		if(request.getParameter("k") != null) {
+			search = request.getParameter("k");
+		}
+		
 		/* 페이징 */
 		int pageSize = 5;
-		int listSize = new BoardDao().findAllCount();
+		int listSize = new BoardDao().findAllCount(search);
 		int totalPage = listSize / pageSize;
 		if(listSize%pageSize != 0) totalPage++;
 
@@ -28,18 +35,22 @@ public class BoardListAction implements Action {
 		int endPage = startPage + pageSize - 1;
 		if (endPage > totalPage)
 			endPage = totalPage;
+				
+		/* 페이지 번호에 해당하는 리스트 */
+		System.out.println(curPage+", "+search);
 		
-//		System.out.println("total: " + totalPage + ", start: "+startPage+", end: "+endPage + ", current: "+curPage);
-		
-		/* 페이지에 맞는 리스트 */
-		List<BoardVo> list = new BoardDao().findAll((curPage-1)*5);
+		List<BoardVo> list = new BoardDao().findAll((curPage-1)*5, search);
 		request.setAttribute("list", list);
+		request.setAttribute("search", search);
 		
-		request.setAttribute("pageSize", pageSize);
-		request.setAttribute("totalPage", totalPage);
-		request.setAttribute("startPage", startPage);
-		request.setAttribute("endPage", endPage);
-		request.setAttribute("curPage", curPage);
+		PaginationVo pageVo = new PaginationVo();
+		pageVo.setPageSize(pageSize);
+		pageVo.setTotalPage(totalPage);
+		pageVo.setStartPage(startPage);
+		pageVo.setEndPage(endPage);
+		pageVo.setCurPage(curPage);
+		
+		request.setAttribute("pageVo", pageVo);
 		
 		WebUtil.forward("board/list", request, response);
 	}

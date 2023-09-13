@@ -14,7 +14,7 @@ import com.poscodx.mysite.vo.BoardVo;
 
 public class BoardDao {
 
-	public List<BoardVo> findAll(int start) {
+	public List<BoardVo> findAll(int start, String search) {
 		List<BoardVo> result = new ArrayList<BoardVo>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -26,10 +26,15 @@ public class BoardDao {
 			String sql =
 					"select no, title, contents, hit, reg_date, g_no, o_no, depth, user_no "
 					+ "from board "
+					+ "where title like ? "
 					+ "order by g_no desc, o_no asc "
 					+ "limit ?, 5";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, start);
+			
+			String s = "%"+search+"%";
+			
+			pstmt.setString(1, s);
+			pstmt.setInt(2, start);
 			
 			rs = pstmt.executeQuery();
 			
@@ -82,7 +87,7 @@ public class BoardDao {
 		return result;
 	}
 	
-	public int findAllCount() {
+	public int findAllCount(String search) {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -93,8 +98,12 @@ public class BoardDao {
 			
 			String sql =
 					"select count(*) "
-					+ "from board";
-			pstmt = conn.prepareStatement(sql);			
+					+ "from board "
+					+ "where title like ?";
+			pstmt = conn.prepareStatement(sql);
+			
+			String s = "%"+search+"%";
+			pstmt.setString(1, s);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
