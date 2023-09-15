@@ -36,9 +36,7 @@ public class BoardListAction implements Action {
 		if (endPage > totalPage)
 			endPage = totalPage;
 				
-		/* 페이지 번호에 해당하는 리스트 */
-		System.out.println(curPage+", "+search);
-		
+		/* 페이지 번호에 해당하는 리스트 */		
 		List<BoardVo> list = new BoardDao().findAll((curPage-1)*5, search);
 		request.setAttribute("list", list);
 		request.setAttribute("search", search);
