@@ -15,7 +15,13 @@ public class UserService {
 	private UserRepository userRepository;
 	
 	public void addUser(UserVo userVo) {
+		System.out.println(userVo);
+
 		userRepository.insert(userVo);
+		
+		// 방금 insert된 데이터의 primary key가 매핑됨 (*user.xml 참고)
+		System.out.println(userVo);
+		
 //		mailSender.send(vo.getEmail(), "", "");
 	}
 
