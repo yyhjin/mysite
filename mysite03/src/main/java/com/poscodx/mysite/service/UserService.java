@@ -14,13 +14,21 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	public void addUser(UserVo vo) {
-		userRepository.insert(vo);
+	public void addUser(UserVo userVo) {
+		userRepository.insert(userVo);
 //		mailSender.send(vo.getEmail(), "", "");
 	}
 
 	public UserVo getUser(String email, String password) {
 		return userRepository.findByEmailAndPassword(email, password);
+	}
+
+	public UserVo getUser(Long no) {
+		return userRepository.findByNo(no);
+	}
+
+	public void update(UserVo userVo) {
+		userRepository.update(userVo);
 	}
 	
 	

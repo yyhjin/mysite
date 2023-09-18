@@ -25,8 +25,8 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/join", method=RequestMethod.POST)
-	public String join(@ModelAttribute UserVo vo) {
-		userService.addUser(vo);
+	public String join(@ModelAttribute UserVo userVo) {
+		userService.addUser(userVo);
 		return "redirect:/user/joinsuccess";
 	}
 	
@@ -67,17 +67,39 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/update", method=RequestMethod.GET)
-	public String update(HttpSession session) {
+	public String update(HttpSession session, Model model) {
 		// Access Control (접근 제어)
 		// url로 접근하려 하는 경우 막기 위한 것. 구식적인 방법
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
 		if(authUser == null) {
 			return "redirect:/user/login";
 		}
+		/* --------------------------------------- */
 		
-		/* ------------------------------- */
+		UserVo userVo = userService.getUser(authUser.getNo());
+		model.addAttribute("userVo", userVo);
 		
 		return "user/update";
+	}
+	
+	@RequestMapping(value="/update", method=RequestMethod.POST)
+	public String update(HttpSession session, @ModelAttribute UserVo userVo) {
+		// Access Control (접근 제어)
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		if (authUser == null) {
+			return "redirect:/user/login";
+		}
+		/* --------------------------------------- */
+
+		userVo.setNo(authUser.getNo());
+		userService.update(userVo);
+		
+		// 세션을 레퍼런싱해서 가져오기 때문에 authUser 바꿔줘도 세션 값이 바뀜
+		// authUser 세션값을 복사해서 가져오는 것이 아님. new를 사용한 것이 아니기 때문에 레퍼런스타입임
+		// 기본적으로 레퍼런스 타입을 사용한다
+		authUser.setName(userVo.getName());
+		
+		return "redirect:/user/update";
 	}
 	
 }
