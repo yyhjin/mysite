@@ -14,10 +14,7 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post" action="${pageContext.request.contextPath}/board">
-					<input type = "hidden" name = "a" value="modify">
-					<input type = "hidden" name = "n" value="${vo.no }">
-					<input type = "hidden" name = "p" value="${curPage }">
+				<form class="board-form" method="post" action="${pageContext.request.contextPath}/board/modify/${no}/${curPage}">
 					
 					<table class="tbl-ex">
 						<tr>
@@ -30,7 +27,7 @@
 						<tr>
 							<td class="label">내용</td>
 							<td>
-								<textarea id="content" name="content">${vo.contents }
+								<textarea id="contents" name="contents">${vo.contents }
 								</textarea>
 							</td>
 						</tr>

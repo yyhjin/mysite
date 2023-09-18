@@ -10,10 +10,10 @@
 <link href="${pageContext.request.contextPath}/assets/css/board.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-	<c:set var="boardNo" value="${param.n }"/>
-	<c:set var="curPage" value="${param.p }"/>
+	<c:set var="boardNo" value="${n }"/>
+	<c:set var="curPage" value="${p }"/>
 	
-	<c:if test="${empty param.n }">
+	<c:if test="${empty n }">
 		<c:set var="boardNo" value="0"/>
 		<c:set var="curPage" value="1"/>
 	</c:if>
@@ -22,10 +22,7 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post" action="${pageContext.request.contextPath}/board">
-					<input type = "hidden" name = "a" value="write">
-					<input type = "hidden" name = "board" value="${boardNo }">
-					<input type = "hidden" name = "p" value="${param.p }">
+				<form class="board-form" method="post" action="${pageContext.request.contextPath}/board/write/${boardNo }/${curPage }">
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">글쓰기</th>
@@ -37,7 +34,7 @@
 						<tr>
 							<td class="label">내용</td>
 							<td>
-								<textarea id="content" name="content"></textarea>
+								<textarea id="contents" name="contents"></textarea>
 							</td>
 						</tr>
 					</table>

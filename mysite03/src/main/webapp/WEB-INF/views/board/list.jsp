@@ -14,11 +14,8 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="${pageContext.request.contextPath}/board" method="post">									
-					<input type = "hidden" name = "a" value="list">
-					<input type = "hidden" name = "p" value="1">
-					
-					<input type="text" id="k" name="k" value="${search }">
+				<form id="search_form" action="${pageContext.request.contextPath}/board" method="get">					
+					<input type="text" id="k" name="k" value="${keyword }">
 					<input type="submit" value="찾기">
 				</form>
 				<table class="tbl-ex">
@@ -38,13 +35,13 @@
 								<c:if test="${vo.depth > 1}">
 									<img src="${pageContext.request.contextPath}/assets/images/reply.png">
 								</c:if>
-								<a href="${pageContext.request.contextPath}/board?a=view&n=${vo.no}&p=${pageVo.curPage}">${vo.title }</a>
+								<a href="${pageContext.request.contextPath}/board/view/${vo.no}/${pageVo.curPage}">${vo.title }</a>
 							</td>
 							<td>${vo.userName }</td>
 							<td>${vo.hit }</td>
 							<td>${vo.regDate }</td>
 							<c:if test="${authUser.no == vo.userNo }">
-								<td><a href="${pageContext.request.contextPath}/board?a=delete&n=${vo.no}&p=${pageVo.curPage}" class="del">삭제</a></td>
+								<td><a href="${pageContext.request.contextPath}/board/delete/${vo.no}/${pageVo.curPage}" class="del">삭제</a></td>
 							</c:if>
 						</tr>
 					</c:forEach>
@@ -54,24 +51,24 @@
 				<div class="pager">
 					<ul>
 						<c:if test="${pageVo.curPage > 1 }">
-							<li><a href="${pageContext.request.contextPath}/board?p=${pageVo.curPage-1 }&k=${search }">◀</a></li>
+							<li><a href="${pageContext.request.contextPath}/board/${pageVo.curPage-1 }/${keyword }">◀</a></li>
 						</c:if>
 						
 						<c:forEach begin="${pageVo.startPage }" end="${pageVo.endPage }" varStatus="status">
 							<li <c:if test="${pageVo.curPage == status.index }">class="selected"</c:if>>
-							<a href="${pageContext.request.contextPath}/board?p=${status.index }&k=${search }">${status.index}</a>
+							<a href="${pageContext.request.contextPath}/board/${status.index }/${keyword }">${status.index}</a>
 							</li>
 						</c:forEach>
 						
 						<c:if test="${pageVo.curPage < pageVo.totalPage }">
-							<li><a href="${pageContext.request.contextPath}/board?p=${pageVo.curPage+1 }&k=${search }">▶</a></li>
+							<li><a href="${pageContext.request.contextPath}/board/${pageVo.curPage+1 }/${keyword }">▶</a></li>
 						</c:if>
 					</ul>
 				</div>					
 				
 				<c:if test="${not empty authUser }">
 					<div class="bottom">
-						<a href="${pageContext.request.contextPath}/board?a=writeform" id="new-book">글쓰기</a>
+						<a href="${pageContext.request.contextPath}/board/write" id="new-book">글쓰기</a>
 					</div>				
 				</c:if>
 			</div>
