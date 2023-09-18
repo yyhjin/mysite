@@ -22,7 +22,6 @@ public class UserController {
 	
 	@RequestMapping(value="/join", method=RequestMethod.POST)
 	public String join(@ModelAttribute UserVo vo) {
-		System.out.println(vo);
 		userService.addUser(vo);
 		return "redirect:/user/joinsuccess";
 	}
