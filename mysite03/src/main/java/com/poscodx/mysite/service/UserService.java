@@ -8,11 +8,19 @@ import com.poscodx.mysite.vo.UserVo;
 
 @Service
 public class UserService {
+//	@Autowired
+//	private MailSender mailSender;
+
 	@Autowired
 	private UserRepository userRepository;
-
+	
 	public void addUser(UserVo vo) {
 		userRepository.insert(vo);
+//		mailSender.send(vo.getEmail(), "", "");
+	}
+
+	public UserVo getUser(String email, String password) {
+		return userRepository.findByEmailAndPassword(email, password);
 	}
 	
 	
