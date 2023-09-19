@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.poscodx.mysite.service.BoardService;
 import com.poscodx.mysite.vo.BoardVo;
@@ -22,13 +23,12 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 	
-	@RequestMapping(value = {"", "/{page}", "/{page}/{keyword}"})
+	@RequestMapping(value = {"", "/{page}"})
 	public String list(@PathVariable(value="page", required=false) Integer page, 
-						@PathVariable(value="keyword", required=false) String keyword,
+						@RequestParam(value="k", required=false, defaultValue="") String keyword,
 						Model model) {
 
 		if(page == null) page = 1;
-		if(keyword == null) keyword = "";
 		
 		/* 페이징 */
 		int pageSize = 5;

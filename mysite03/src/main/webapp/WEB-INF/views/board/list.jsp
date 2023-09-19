@@ -14,7 +14,7 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="${pageContext.request.contextPath}/board" method="get">					
+				<form id="search_form" action="${pageContext.request.contextPath}/board/1" method="get">					
 					<input type="text" id="k" name="k" value="${keyword }">
 					<input type="submit" value="찾기">
 				</form>
@@ -51,17 +51,17 @@
 				<div class="pager">
 					<ul>
 						<c:if test="${pageVo.curPage > 1 }">
-							<li><a href="${pageContext.request.contextPath}/board/${pageVo.curPage-1 }/${keyword }">◀</a></li>
+							<li><a href="${pageContext.request.contextPath}/board/${pageVo.curPage-1 }?k=${keyword }">◀</a></li>
 						</c:if>
 						
 						<c:forEach begin="${pageVo.startPage }" end="${pageVo.endPage }" varStatus="status">
 							<li <c:if test="${pageVo.curPage == status.index }">class="selected"</c:if>>
-							<a href="${pageContext.request.contextPath}/board/${status.index }/${keyword }">${status.index}</a>
+							<a href="${pageContext.request.contextPath}/board/${status.index }?k=${keyword }">${status.index}</a>
 							</li>
 						</c:forEach>
 						
 						<c:if test="${pageVo.curPage < pageVo.totalPage }">
-							<li><a href="${pageContext.request.contextPath}/board/${pageVo.curPage+1 }/${keyword }">▶</a></li>
+							<li><a href="${pageContext.request.contextPath}/board/${pageVo.curPage+1 }?k=${keyword }">▶</a></li>
 						</c:if>
 					</ul>
 				</div>					
