@@ -113,7 +113,7 @@ public class BoardController {
 		int curPage = 1;
 		
 		// 게시글 작성
-		if(boardNo == null) {
+		if(boardNo == 0) {
 			groupNo = boardService.getMaxGroup() + 1;
 			orderNo = 1;
 			depth = 1;

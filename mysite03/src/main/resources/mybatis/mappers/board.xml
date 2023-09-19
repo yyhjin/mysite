@@ -25,8 +25,8 @@
 	
 	<select id="findByNo" resultType="boardvo" parameterType="long">
 		<![CDATA[
-		select title as title, contents as contents, 
-			user_no as userNo, g_no as groupNo, o_no as orderNo, depth as depth
+		select title, contents, 
+			user_no as userNo, g_no as groupNo, o_no as orderNo, depth
 		from board
 		where no = #{no}
 		]]>
@@ -77,46 +77,5 @@
 		where no = #{no}
 		]]>
 	</update>
-	
-	<!-- 
-	<select id="findByNo" resultType="uservo" parameterType="long">
-		<![CDATA[
-		select email, gender, name
-		from user
-		where no = #{no}
-		]]>
-	</select>
-	
-	<insert id="insert" parameterType="uservo">
-		<![CDATA[
-		insert into user
-		values(null, #{name}, #{email}, password(#{password}), #{gender}, current_date())
-		]]>
-		<selectKey keyProperty="no" resultType="long" order="AFTER">	
-			<![CDATA[
-			select last_insert_id();
-			]]>
-		</selectKey>
-	</insert>
 
-	<update id="update" parameterType="uservo">
-		<choose>
-			<when test='password == ""'>
-				<![CDATA[
-				update user
-				set name=#{name}, gender=#{gender}
-				where no=#{no}
-				]]>			
-			</when>
-			<otherwise>
-				<![CDATA[
-				update user
-				set name=#{name}, password=password(#{password}), gender=#{gender}
-				where no=#{no}
-				]]>			
-			</otherwise>
-		</choose>
-	</update>
-	
-	 -->
 </mapper>
