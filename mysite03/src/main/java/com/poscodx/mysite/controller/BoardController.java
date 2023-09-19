@@ -92,7 +92,6 @@ public class BoardController {
 			return "board/write";			
 		}
 		else {
-			System.out.println("답글");
 			model.addAttribute("n", no);
 			model.addAttribute("p", page);
 			return "board/write";
@@ -120,9 +119,7 @@ public class BoardController {
 			depth = 1;
 		}
 		// 답글 작성
-		else {
-			System.out.println(boardNo);
-			
+		else {			
 			BoardVo parentVo = boardService.findByNo(boardNo);
 			groupNo = parentVo.getGroupNo();
 			orderNo = parentVo.getOrderNo()+1;
