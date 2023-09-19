@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.sql.DataSource;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +25,7 @@ public class GuestbookRepository {
 	}
 
 	public String findPasswordByNo(long no) {
-		String password = sqlSession.selectOne("guestbook.findPasswordByNo", no);
-		return password;
+		return sqlSession.selectOne("guestbook.findPasswordByNo", no);
 	}
 	
 	public boolean insert(GuestbookVo vo) {
