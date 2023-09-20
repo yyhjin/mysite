@@ -19,10 +19,35 @@
 		base-package="com.poscodx.mysite.controller, com.poscodx.mysite.exception" />
 
 	<!-- Validator, Default Servlet Handler, Message Converter, Argument Resolve 자동 등록 -->
-	<mvc:annotation-driven />
+	<mvc:annotation-driven>
+	
+		<!-- Argument Resolver -->
+		<mvc:argument-resolvers>
+			<bean class="com.poscodx.mysite.security.AuthUserHandlerMethodArgumentResolver" />
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
 
 	<!-- Default Servlet Handler -->
 	<mvc:default-servlet-handler />
+
+	<!-- Interceptors -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/user/auth" />
+			<bean class="com.poscodx.mysite.security.LoginInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/user/logout" />
+			<bean class="com.poscodx.mysite.security.LogoutInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/assets/**"/>
+			<mvc:exclude-mapping path="/user/auth"/>
+			<mvc:exclude-mapping path="/user/logout"/>
+			<bean class="com.poscodx.mysite.security.AuthInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
 
 	<!-- View Resolver 설정 -->
 	<bean id="viewResolver"

@@ -7,11 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.poscodx.mysite.security.Auth;
 import com.poscodx.mysite.service.GuestbookService;
 import com.poscodx.mysite.vo.GuestbookVo;
 
@@ -21,6 +21,7 @@ public class GuestbookController {
 	@Autowired
 	private GuestbookService guestbookService;
 	
+	@Auth
 	@RequestMapping("")
 	public String main(Model model) {
 		List<GuestbookVo> list = guestbookService.getContentsList();
