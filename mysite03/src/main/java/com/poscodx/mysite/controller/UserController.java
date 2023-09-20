@@ -98,9 +98,7 @@ public class UserController {
 	
 	@Auth
 	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public String update(HttpSession session, @ModelAttribute UserVo userVo) {
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
-
+	public String update(@AuthUser UserVo authUser, @ModelAttribute UserVo userVo) {		
 		userVo.setNo(authUser.getNo());
 		userService.update(userVo);
 		
