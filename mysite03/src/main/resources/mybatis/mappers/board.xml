@@ -64,10 +64,20 @@
 	</update>
 	
 	<insert id="insert" parameterType="boardvo">
-		<![CDATA[
-		insert into board(user_no, title, contents, g_no, o_no, depth, reg_date, hit)
-		values(#{userNo}, #{title}, #{contents}, #{groupNo}, #{orderNo}, #{depth}, now(), 1)
-		]]>
+		<choose>
+			<when test="groupNo == 0">
+				<![CDATA[
+				insert into board(user_no, title, contents, g_no, o_no, depth, reg_date, hit)
+				values(#{userNo}, #{title}, #{contents}, (1+(select max(g_no) from board g)), 1, 1, now(), 1)
+				]]>			
+			</when>
+			<otherwise>
+				<![CDATA[
+				insert into board(user_no, title, contents, g_no, o_no, depth, reg_date, hit)
+				values(#{userNo}, #{title}, #{contents}, #{groupNo}, #{orderNo}, #{depth}, now(), 1)
+				]]>
+			</otherwise>
+		</choose>
 	</insert>
 	
 	<update id="updateBoard" parameterType="boardvo">

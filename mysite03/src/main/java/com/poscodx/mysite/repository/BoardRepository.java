@@ -41,11 +41,6 @@ public class BoardRepository {
 		BoardVo boardVo = sqlSession.selectOne("board.findByNo", no);
 		return boardVo;
 	}
-
-	public int getMaxGroup() {
-		int max = sqlSession.selectOne("board.getMaxGroup");
-		return max;
-	}
 	
 	public boolean insert(BoardVo vo) {
 		int count = sqlSession.insert("board.insert", vo);

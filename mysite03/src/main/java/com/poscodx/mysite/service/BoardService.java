@@ -33,10 +33,6 @@ public class BoardService {
 		boardRepository.deleteByNo(no);
 	}
 
-	public int getMaxGroup() {
-		return boardRepository.getMaxGroup();
-	}
-
 	public void updateOrderNo(int groupNo, int orderNo) {
 		boardRepository.updateOrderNo(groupNo, orderNo);
 	}
@@ -48,6 +44,7 @@ public class BoardService {
 	public void updateBoard(BoardVo boardVo) {
 		boardRepository.updateBoard(boardVo);
 	}
+
 	
 	
 	

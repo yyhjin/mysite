@@ -107,33 +107,20 @@ public class BoardController {
 		UserVo userVo = (UserVo) session.getAttribute("authUser");
 		Long userNo = userVo.getNo();
 		
-		int groupNo = -1;
-		int orderNo = 1;
-		int depth = 0;
 		int curPage = 1;
-		
-		// 게시글 작성
-		if(boardNo == 0) {
-			groupNo = boardService.getMaxGroup() + 1;
-			orderNo = 1;
-			depth = 1;
-		}
+		boardVo.setUserNo(userNo);
+
 		// 답글 작성
-		else {			
-			BoardVo parentVo = boardService.findByNo(boardNo);
-			groupNo = parentVo.getGroupNo();
-			orderNo = parentVo.getOrderNo()+1;
-			depth  = parentVo.getDepth()+1;
+		if(boardNo != 0) {
+			BoardVo parent = boardService.findByNo(boardNo);
+			boardVo.setGroupNo(parent.getGroupNo());
+			boardVo.setOrderNo(parent.getOrderNo()+1);
+			boardVo.setDepth(parent.getDepth()+1);
 			curPage = page;
 			
-			boardService.updateOrderNo(groupNo, parentVo.getOrderNo());
+			boardService.updateOrderNo(parent.getGroupNo(), parent.getOrderNo());
 		}
-		
-		boardVo.setUserNo(userNo);
-		boardVo.setGroupNo(groupNo);
-		boardVo.setOrderNo(orderNo);
-		boardVo.setDepth(depth);
-				
+
 		boardService.insert(boardVo);
 		
 		return "redirect:/board/"+curPage;
