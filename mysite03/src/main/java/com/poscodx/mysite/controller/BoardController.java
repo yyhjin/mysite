@@ -2,8 +2,6 @@ package com.poscodx.mysite.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.poscodx.mysite.security.Auth;
+import com.poscodx.mysite.security.AuthUser;
 import com.poscodx.mysite.service.BoardService;
 import com.poscodx.mysite.vo.BoardVo;
 import com.poscodx.mysite.vo.PaginationVo;
@@ -73,6 +73,7 @@ public class BoardController {
 		return "board/view";
 	}
 	
+	@Auth
 	@RequestMapping("/delete/{no}/{page}")
 	public String delete(@PathVariable long no,
 						@PathVariable int page,
@@ -83,7 +84,8 @@ public class BoardController {
 		model.addAttribute("p", page);
 		return "redirect:/board";
 	}
-	
+
+	@Auth
 	@RequestMapping(value={"/write", "/write/{no}/{page}"}, method=RequestMethod.GET) 
 	public String write(@PathVariable(value="no", required=false) Long no, 
 						@PathVariable(value="page", required=false) Integer page, 
@@ -98,14 +100,16 @@ public class BoardController {
 		}
 	}
 	
+	@Auth
 	@RequestMapping(value="/write/{no}/{page}", method=RequestMethod.POST)
-	public String write(HttpSession session,
+	public String write(@AuthUser UserVo authUser,
 						@PathVariable("no") Integer boardNo,
 						@PathVariable("page") Integer page,
 						BoardVo boardVo) {
 		
-		UserVo userVo = (UserVo) session.getAttribute("authUser");
-		Long userNo = userVo.getNo();
+//		UserVo userVo = (UserVo) session.getAttribute("authUser");
+//		Long userNo = userVo.getNo();
+		Long userNo = authUser.getNo();
 		
 		int curPage = 1;
 		boardVo.setUserNo(userNo);
@@ -126,6 +130,7 @@ public class BoardController {
 		return "redirect:/board/"+curPage;
 	}
 	
+	@Auth
 	@RequestMapping(value="/modify/{no}/{page}", method=RequestMethod.GET) 
 	public String modify(@PathVariable Long no, 
 						@PathVariable Integer page, 
@@ -138,6 +143,7 @@ public class BoardController {
 		return "board/modify";
 	}
 	
+	@Auth
 	@RequestMapping(value="/modify/{no}/{page}", method=RequestMethod.POST) 
 	public String modify(@PathVariable Long no, 
 						@PathVariable Integer page, 
@@ -148,7 +154,6 @@ public class BoardController {
 		
 		return "redirect:/board/view/"+no+"/"+page;
 	}
-	
 	
 	
 }
