@@ -15,8 +15,7 @@
 	
 	
 	<context:annotation-config />
-	<context:component-scan
-		base-package="com.poscodx.mysite.controller, com.poscodx.mysite.exception" />
+	<context:component-scan base-package="com.poscodx.mysite.controller, com.poscodx.mysite.exception" />
 
 	<!-- Validator, Default Servlet Handler, Message Converter, Argument Resolve 자동 등록 -->
 	<mvc:annotation-driven>
