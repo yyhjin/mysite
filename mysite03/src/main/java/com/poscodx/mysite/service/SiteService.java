@@ -15,5 +15,9 @@ public class SiteService {
 	public SiteVo getSite() {
 		return siteRepository.find();
 	}
+
+	public Boolean updateSite(SiteVo vo) {
+		return siteRepository.update(vo);
+	}
 	
 }
