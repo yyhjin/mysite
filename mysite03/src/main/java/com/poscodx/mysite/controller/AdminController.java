@@ -1,6 +1,9 @@
 package com.poscodx.mysite.controller;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +20,17 @@ import com.poscodx.mysite.vo.SiteVo;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+	// spring container
+	@Autowired
+	private ApplicationContext applicationContext;
+	
+	// tomcat container. interceptor  사용할 떄 필요
+	@Autowired
+	private ServletContext servletContext;
+	
 	@Autowired
 	private SiteService siteService;
+	
 	@Autowired
 	private FileUploadService fileUploadService;
 	
@@ -33,8 +45,10 @@ public class AdminController {
 	public String update(@RequestParam("file") MultipartFile file, SiteVo vo) {
 		String url = fileUploadService.restore(file);
 		vo.setProfile(url);
-		System.out.println(vo);
 		siteService.updateSite(vo);
+		
+		SiteVo newVo = siteService.getSite();
+		servletContext.setAttribute("siteVo", newVo);
 		return "redirect:/admin";  
 	}
 	
