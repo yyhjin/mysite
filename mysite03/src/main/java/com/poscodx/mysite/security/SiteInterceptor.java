@@ -23,7 +23,6 @@ public class SiteInterceptor implements HandlerInterceptor {
 		if(sc.getAttribute("siteVo") == null) {
 			SiteVo siteVo = siteService.getSite();
 			sc.setAttribute("siteVo", siteVo);
-			return true;
 		}
 		
 		return true;
