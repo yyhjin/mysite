@@ -25,12 +25,12 @@ public class UserController {
 	private UserService userService;
 	
 	@RequestMapping(value="/join", method=RequestMethod.GET)
-	public String join() {
+	public String join(@ModelAttribute UserVo userVo) {
 		return "user/join";
 	}
 	
 	@RequestMapping(value="/join", method=RequestMethod.POST)
-	public String join(@Valid UserVo userVo, BindingResult result, Model model) {
+	public String join(@ModelAttribute @Valid UserVo userVo, BindingResult result, Model model) {
 		if(result.hasErrors()) {
 //			List<ObjectError> list = result.getAllErrors();
 //			for(ObjectError error: list) {
@@ -38,7 +38,7 @@ public class UserController {
 //			}
 			
 			model.addAllAttributes(result.getModel());
-			model.addAttribute("userVo", userVo);
+//			model.addAttribute("userVo", userVo);  // 얘를 없애기 위해서 @ModelAttribute 붙여준 것
 			return "user/join";
 		}
 		
