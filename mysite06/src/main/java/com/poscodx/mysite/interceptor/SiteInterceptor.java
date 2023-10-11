@@ -1,5 +1,6 @@
 package com.poscodx.mysite.interceptor;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,16 +13,19 @@ import com.poscodx.mysite.vo.SiteVo;
 public class SiteInterceptor implements HandlerInterceptor {
 	@Autowired
 	private SiteService siteService;
-	
+
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
-		SiteVo siteVo = (SiteVo)request.getServletContext().getAttribute("siteVo");
-		if(siteVo == null) {
-			siteVo = siteService.getSite();
-			request.getServletContext().setAttribute("siteVo", siteVo);
+			throws Exception { 
+		
+		ServletContext sc = request.getServletContext();
+		
+		if(sc.getAttribute("siteVo") == null) {
+			SiteVo siteVo = siteService.getSite();
+			sc.setAttribute("site", siteVo);
 		}
 		
 		return true;
 	}
+	
 }

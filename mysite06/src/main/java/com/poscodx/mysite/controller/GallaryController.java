@@ -8,7 +8,7 @@ import com.poscodx.mysite.service.GalleryService;
 
 @Controller
 @RequestMapping("/gallery")
-public class GalleryController {
+public class GallaryController {
 	@Autowired
 	private GalleryService galleryService;
 	
@@ -16,4 +16,7 @@ public class GalleryController {
 	public String index() {
 		return "gallery/index";
 	}
+	
+	
+	
 }

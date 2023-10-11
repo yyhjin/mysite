@@ -22,16 +22,19 @@ public class UserRepository {
 		return sqlSession.selectOne("user.findByEmailAndPassword", map);
 	}
 	
-	public UserVo findByNo(Long no) {
+	public UserVo findByNo(long no) {
 		return sqlSession.selectOne("user.findByNo", no);
 	}
-
-	public void update(UserVo vo) {
-		sqlSession.update("user.update", vo);
-	}
 	
-	public Boolean insert(UserVo vo) {
+	public boolean insert(UserVo vo) {
 		int count = sqlSession.insert("user.insert", vo);
 		return count == 1;
 	}
+	
+	public boolean update(UserVo vo) {
+		int count = sqlSession.update("user.update", vo);
+		return count == 1;
+	}
+	
+	
 }

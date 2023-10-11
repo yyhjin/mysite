@@ -4,13 +4,14 @@ public class BoardVo {
 	private Long no;
 	private String title;
 	private String contents;
+	private int hit;
 	private String regDate;
-	private Integer hit;
-	private Integer groupNo;
-	private Integer orderNo;
-	private Integer depth;
+	private int groupNo;
+	private int orderNo;
+	private int depth;
 	private Long userNo;
 	private String userName;
+	
 	public Long getNo() {
 		return no;
 	}
@@ -29,34 +30,34 @@ public class BoardVo {
 	public void setContents(String contents) {
 		this.contents = contents;
 	}
+	public int getHit() {
+		return hit;
+	}
+	public void setHit(int hit) {
+		this.hit = hit;
+	}
 	public String getRegDate() {
 		return regDate;
 	}
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
-	public Integer getHit() {
-		return hit;
-	}
-	public void setHit(Integer hit) {
-		this.hit = hit;
-	}
-	public Integer getGroupNo() {
+	public int getGroupNo() {
 		return groupNo;
 	}
-	public void setGroupNo(Integer groupNo) {
+	public void setGroupNo(int groupNo) {
 		this.groupNo = groupNo;
 	}
-	public Integer getOrderNo() {
+	public int getOrderNo() {
 		return orderNo;
 	}
-	public void setOrderNo(Integer orderNo) {
+	public void setOrderNo(int orderNo) {
 		this.orderNo = orderNo;
 	}
-	public Integer getDepth() {
+	public int getDepth() {
 		return depth;
 	}
-	public void setDepth(Integer depth) {
+	public void setDepth(int depth) {
 		this.depth = depth;
 	}
 	public Long getUserNo() {
@@ -71,10 +72,12 @@ public class BoardVo {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+	
 	@Override
 	public String toString() {
-		return "BoardVo [no=" + no + ", title=" + title + ", contents=" + contents + ", regDate=" + regDate + ", hit="
-				+ hit + ", groupNo=" + groupNo + ", orderNo=" + orderNo + ", depth=" + depth + ", userNo=" + userNo
+		return "BoardVo [no=" + no + ", title=" + title + ", contents=" + contents + ", hit=" + hit + ", regDate="
+				+ regDate + ", groupNo=" + groupNo + ", orderNo=" + orderNo + ", depth=" + depth + ", userNo=" + userNo
 				+ ", userName=" + userName + "]";
 	}
+	
 }

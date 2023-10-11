@@ -17,9 +17,12 @@ public class LoginInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		
+		/* Interceptor는 Servlet 코드로 작성한다 */
+		
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-
+		
 		UserVo authUser = userService.getUser(email, password);
 		
 		if(authUser == null) {
@@ -27,7 +30,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 			request
 				.getRequestDispatcher("/WEB-INF/views/user/login.jsp")
 				.forward(request, response);
-			
+
 			return false;
 		}
 		
@@ -39,4 +42,5 @@ public class LoginInterceptor implements HandlerInterceptor {
 		
 		return false;
 	}
+	
 }

@@ -18,10 +18,16 @@ public class GuestbookService {
 	}
 	
 	public Boolean deleteContents(Long no, String password) {
-		return guestbookRepository.deleteByNoAndPassword(no, password);
+		boolean result = false;
+		if(password.equals(guestbookRepository.findPasswordByNo(no))) {
+			result = guestbookRepository.deleteByNo(no);	
+		}
+		return result;
 	}
 	
 	public Boolean addContents(GuestbookVo vo) {
-		return guestbookRepository.insert(vo);
+		boolean result = guestbookRepository.insert(vo);
+		return result;
 	}
+	
 }

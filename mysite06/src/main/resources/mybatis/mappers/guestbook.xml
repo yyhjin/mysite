@@ -2,29 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="guestbook">
-	
-	<select id="findAll" resultType="guestbookVo">
+	 <!-- resultType의 Alias는 configuration에 선언되어 있음 -->
+	<select id="findAll" resultType="guestbookvo">
 		<![CDATA[
-		  select no, name, contents, date_format(reg_date, '%Y/%m/%d %H:%i:%s') as regDate 
-		    from guestbook 
-        order by reg_date desc
+		select no, name, contents, date_format(reg_date, '%Y/%m/%d %H:%i:%s') as regDate
+		from guestbook
+		order by reg_date desc
 		]]>
 	</select>
-
-	<insert id="insert" parameterType="guestbookvo">
+	 
+	<select id="findPasswordByNo" parameterType="long" resultType="string">
 		<![CDATA[
-		insert
-		  into guestbook
-		values (null, #{name }, #{password }, #{contents }, now())
+		select password
+		from guestbook
+		where no = #{no}
 		]]>
-	</insert>
-
-	<delete id="deleteByNoAndPassword" parameterType="map">
+	</select>
+	 
+	 <insert id="insert" parameterType="guestbookvo">
 		<![CDATA[
-		delete
-		  from guestbook
-		 where no = #{no }
-		   and password = #{password }
+		insert into guestbook(name, password, contents, reg_date)
+		values(#{name}, #{password}, #{contents}, now())
+		]]>	 
+	 </insert>
+
+	<delete id="deleteByNo" parameterType="map">
+		<![CDATA[
+		delete from guestbook
+		where no = #{no}	
 		]]>
 	</delete>
+
 </mapper>

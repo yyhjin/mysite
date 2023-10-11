@@ -8,6 +8,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.poscodx.mysite.security.Auth;
@@ -19,58 +21,63 @@ import com.poscodx.mysite.vo.SiteVo;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+	// spring container
 	@Autowired
 	private ApplicationContext applicationContext;
 	
+	// tomcat container. interceptor  사용할 떄 필요
 	@Autowired
 	private ServletContext servletContext;
 	
 	@Autowired
 	private SiteService siteService;
-
+	
 	@Autowired
-	private FileUploadService fileuploadService;
-
+	private FileUploadService fileUploadService;
+	
 	@RequestMapping("")
 	public String main(Model model) {
-		SiteVo vo = siteService.getSite();
-		model.addAttribute("siteVo", vo);
-		return "admin/main";
+		SiteVo siteVo = siteService.getSite();
+		model.addAttribute("siteVo", siteVo);
+		return "admin/main";  
 	}
-
-	@RequestMapping("/main/update")
-	public String update(SiteVo vo, MultipartFile file) {
-		String profile = fileuploadService.restore(file);
-		if(profile != null) {
-			vo.setProfile(profile);
-		}		
-		
-		SiteVo site = applicationContext.getBean(SiteVo.class);
-
+	
+	@RequestMapping(value="/main/update", method=RequestMethod.POST)
+	public String update(@RequestParam("file") MultipartFile file, SiteVo vo) {
+		String url = fileUploadService.restore(file);
+		vo.setProfile(url);
 		siteService.updateSite(vo);
-		servletContext.setAttribute("siteVo", vo);
 		
-//		site.setTitle(vo.getTitle());
-//		site.setWelcome(vo.getWelcome());
-//		site.setProfile(vo.getProfile());
-//		site.setDescription(vo.getDescription());
-		BeanUtils.copyProperties(vo, site);
+		SiteVo newVo = siteService.getSite();
 		
-		return "redirect:/admin";
+		/* ServletContext 이용한 방법 */
+		servletContext.setAttribute("siteVo", newVo);
+		
+		/* ApplicationContext 이용한 방법 */
+		SiteVo site = applicationContext.getBean(SiteVo.class);
+//		site.setTitle(newVo.getTitle());
+//		site.setWelcome(newVo.getWelcome());
+//		site.setProfile(newVo.getProfile());
+//		site.setDescription(newVo.getDescription());
+		BeanUtils.copyProperties(newVo, site);  // 위의 주석 코드 이걸로 대체 가능, newVo의 값을 site에 copy해오는 것
+		
+		return "redirect:/admin";  
 	}
 	
 	@RequestMapping("/guestbook")
 	public String guestbook() {
-		return "admin/guestbook";
+		return "admin/guestbook";  
 	}
-
+	
 	@RequestMapping("/board")
 	public String board() {
-		return "admin/board";
+		return "admin/board";  
 	}
-
+	
 	@RequestMapping("/user")
 	public String user() {
-		return "admin/user";
-	}	
+		return "admin/user";  
+	}
+	
+	
 }
