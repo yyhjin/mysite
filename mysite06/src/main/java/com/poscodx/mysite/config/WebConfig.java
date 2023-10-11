@@ -1,5 +1,6 @@
 package com.poscodx.mysite.config;
 
+import org.apache.catalina.security.SecurityConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -12,9 +13,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.poscodx.mysite.config.web.FileuploadConfig;
 import com.poscodx.mysite.config.web.MessageSourceConfig;
 import com.poscodx.mysite.config.web.MvcConfig;
-import com.poscodx.mysite.config.web.SecurityConfig;
 import com.poscodx.mysite.event.ApplicationContextEventListener;
-import com.poscodx.mysite.security.SiteInterceptor;
+import com.poscodx.mysite.interceptor.SiteInterceptor;
 
 @Configuration
 @EnableAspectJAutoProxy
