@@ -26,6 +26,10 @@ public class UserRepository {
 		return sqlSession.selectOne("user.findByNo", no);
 	}
 	
+	public UserVo findByEmail(String email) {
+		return sqlSession.selectOne("user.findByEmail", email);
+	}
+	
 	public boolean insert(UserVo vo) {
 		int count = sqlSession.insert("user.insert", vo);
 		return count == 1;
