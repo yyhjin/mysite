@@ -134,7 +134,7 @@ $(function() {
 					<label class="block-label" for="email">이메일</label> 					
 					<form:input path="email" />
 					
-					<input id='btn-check-email' type="button" value="id 중복체크">
+					<input id='btn-check-email' type="button" value="중복체크">
 					<img id='img-check-email' src='${pageContext.request.contextPath }/assets/images/check.png' style='width: 16px; vertical-align: middle; display:none'>
 					
 					<p style="padding: 3px 0 5px 0; text-align: left; color: #f00">
