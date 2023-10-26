@@ -166,7 +166,7 @@ $(function() {
 		<c:import url="/WEB-INF/views/includes/navigation.jsp" />
 		<c:import url="/WEB-INF/views/includes/footer.jsp" />
 	</div>
-	<div id="dialog" title="이메일 중복 체크">
+	<div id="dialog" title="이메일 중복 체크" style="display:none">
   		<p style="line-height:60px">사용중인 이메일입니다. 다른 이메일을 사용해 주세요.</p>
 	</div>
 </body>
